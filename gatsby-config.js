@@ -6,5 +6,10 @@ module.exports = {
     title: `website`,
     siteUrl: `https://www.yourdomain.tld`
   },
-  plugins: ["gatsby-plugin-sass"]
+  plugins: ["gatsby-plugin-sass", {
+    resolve: 'gatsby-plugin-manifest',
+    options: {
+      "icon": "src/images/icon.png"
+    }
+  }],
 };
