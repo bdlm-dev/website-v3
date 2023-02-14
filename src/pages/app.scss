@@ -2,7 +2,7 @@
 
 :root {
     font-size: 16px;
-    font-size: max(1.6vmin, 15px);
+    font-size: max(1.6vmin, 16px);
 }
 
 * {
@@ -102,4 +102,13 @@ body {
     transition: background-color 75ms ease,
                 transform 75ms ease,
 
+}
+
+@media (max-width: 480px) {
+    :root {
+        font-size: 1.8vmax;
+    }
+    .tagline {
+        font-size: 1.8rem;
+    }
 }
