@@ -8,9 +8,13 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      theme: new URLSearchParams(window.location.search).get("theme") === "dark" ? "dark" : "light",
+      theme: "dark",
     }
     this.toggleTheme = this.toggleTheme.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({themeL: new URLSearchParams(document.location.search).get("theme") === "dark" ? "dark" : "light"});
   }
 
   toggleTheme() {
