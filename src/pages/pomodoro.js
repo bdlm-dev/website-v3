@@ -8,11 +8,19 @@ import HomeButton from '../components/homeButton.js'
 export default class Pomodoro extends Component {
     constructor(props) {
         super(props)
+        this.timeOptions = {
+            '0': 1500,
+            '1': 300,
+            '2': 900,
+        }
+
         this.state = {
             theme: "light",
             option: 0,
             paused: true,
+            time: 1500,
         }
+
         this.playButton = null;
 
         this.toggleTheme = this.toggleTheme.bind(this);
@@ -20,13 +28,43 @@ export default class Pomodoro extends Component {
         this.togglePlaying = this.togglePlaying.bind(this);
     }
 
+    timer = () => {
+        this.interval = setInterval(
+            () => {
+                this.setState(prevState => ({
+                    time: prevState.time-1,
+                }), () => {
+                    if (this.state.time === 0) {
+                        this.stopTimer();
+                    }
+                });
+            }, 1000,
+        )
+    }
+
+    startTimer = () => {
+        this.timer();
+    }
+
+    stopTimer = () => {
+        clearInterval(this.interval);
+    }
+
     updateSelector = (choice) => {
         document.querySelector(`#btn${this.state.option}`).classList.remove("selected");
         this.setState({option: choice}, () => {document.querySelector(`#btn${choice}`).classList.add("selected");});
+        this.checkButtons(choice);
+    }
+
+    checkButtons = (choice="NONE") => {
+        this.setState({time: this.timeOptions[choice === "NONE" ? this.state.option : choice]});
+        this.stopTimer();
+        if (!this.state.paused) {
+            this.togglePlaying();
+        }
     }
 
     componentDidMount() {
-        this.togglePlaying();
         this.setState({theme: new URLSearchParams(document.location.search).get("theme") === "dark" ? "dark" : "light"});
     }
 
@@ -39,10 +77,18 @@ export default class Pomodoro extends Component {
             this.playButton = document.querySelector(".player");
         }
         this.setState({paused: !this.state.paused}, () => {
-            this.playButton.classList.remove(this.state.paused ? "playing" : "paused");
-            this.playButton.classList.add(this.state.paused ? "paused" : "playing");
+            this.playButton.classList.remove(this.state.paused ?  "paused" : "playing");
+            this.playButton.classList.add(this.state.paused ?  "playing" : "paused");
+            if (!this.state.paused) {
+                this.startTimer();
+            }
+            else {
+                this.stopTimer();
+            }
         });
     }
+
+    zeroPad = (num, places) => String(num).padStart(places, '0')
 
     render() {
         var classList = clsx({
@@ -63,11 +109,11 @@ export default class Pomodoro extends Component {
                             <button className="button" onClick={() => {this.updateSelector(2)}} id="btn2">Long Break</button>
                         </div>
                         <div className="time">
-                            25:00
+                            {Math.floor(this.zeroPad(this.state.time/60, 2))}:{this.zeroPad(this.state.time % 60, 2)}
                         </div>
                         <div className="time_control_wrapper">
                             <button className="time_control player playing" onClick={() => {this.togglePlaying();}}></button>
-                            <button className="time_control" ></button>
+                            <button className="time_control" onClick={()=>{this.checkButtons();}}></button>
                         </div>
                     </div>
                 </div>
@@ -76,11 +122,9 @@ export default class Pomodoro extends Component {
     }
 }
 
-// export const Head = () => <title>Pomodoro</title>
+export const Head = () => <title>bdlm - Pomodoro</title>
 
 // TODO:
-// actually use the point of components,
-// and split this entire thing up.
+// split up into multiple components
 
-//figure out timer tomorrow with
-// https://www.geeksforgeeks.org/how-to-create-a-countdown-timer-using-reactjs/
+// redo the playing buttons as button-label pairs
