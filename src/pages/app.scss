@@ -1,0 +1,105 @@
+@import '../components/variables';
+
+:root {
+    font-size: 16px;
+    font-size: max(1.6vmin, 15px);
+}
+
+* {
+    transition: all 50ms ease;
+}
+
+body {
+    font-family: $--font-primary;
+    margin: 0;
+    padding: 0;
+    background-color: $--color-primary;
+    color: $--color-light;
+    border-color: $--color-light;
+}
+
+.light {
+    background-color: $--color-light;
+    color: $--color-primary;
+    border-color: $--color-primary;
+
+    .pomodoro_link {
+        border-color: $--color-primary;
+        color: $--color-primary;
+
+        &:hover {
+            color: $--color-light;
+            background-color: $--color-primary;
+            box-shadow: 0px 10px 20px rgba(60, 60, 60, 0.3);
+        }
+    }
+}
+
+.landing {
+    width: 100vw;
+    height: 100vh;
+
+    display: grid;
+    grid-template: repeat(8, 12.5%) / 100vw;
+    justify-content: center;
+    text-align: center;
+    align-items: flex-start;
+    & * {
+        display: inline-block;
+    }
+}
+
+.initials {
+    font-size: 14rem;
+    font-weight: 700;
+    grid-row: span 2;
+    align-self: flex-end;
+    line-height: 0.9;
+}
+
+.links {
+    height: 100%;
+    grid-row: span 2;
+    display: grid;
+    place-items: center;
+}
+
+.tagline_wrapper {
+    display: flex;
+    flex-direction: column; // nowrap default
+    justify-content: center;
+    align-items: center;
+}
+
+.tagline {
+    font-size: 1.6rem;
+    font-weight: 400;
+}
+
+.pomodoro_link {
+    display: inline-block;
+    font-family: "Crimson Text";
+    border: 2px solid;
+    padding: 20px 50px;
+    font-size: 1.6rem;
+    border-radius: 50px;
+
+    border-color: $--color-light;
+    background-color: transparent;
+    color: $--color-light;
+
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+
+    &:hover {
+        transform: scale(1.1, 1.1);
+        box-shadow: 0px 10px 20px rgba(120, 120, 120, 0.3);
+        background-color: $--color-light;
+        color: $--color-primary;
+    }
+
+    transition: background-color 75ms ease,
+                transform 75ms ease,
+
+}
