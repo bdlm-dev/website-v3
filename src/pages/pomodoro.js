@@ -9,7 +9,7 @@ export default class Pomodoro extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            theme: new URLSearchParams(global.window.location.search).get("theme") === "dark" ? "dark" : "light",
+            theme: "light",
             option: 0,
             paused: true,
         }
@@ -27,6 +27,7 @@ export default class Pomodoro extends Component {
 
     componentDidMount() {
         this.togglePlaying();
+        this.setState({theme: new URLSearchParams(document.location.search).get("theme") === "dark" ? "dark" : "light"});
     }
 
     toggleTheme() {
