@@ -14,7 +14,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    this.setState({themeL: new URLSearchParams(document.location.search).get("theme") === "dark" ? "dark" : "light"});
+    this.setState({theme: new URLSearchParams(document.location.search).get("theme") === "dark" ? "dark" : "light"});
   }
 
   toggleTheme() {
