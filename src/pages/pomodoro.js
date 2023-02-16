@@ -15,7 +15,7 @@ export default class Pomodoro extends Component {
         }
 
         this.state = {
-            theme: "light",
+            theme: "dark",
             option: 0,
             paused: true,
             time: 1500,
